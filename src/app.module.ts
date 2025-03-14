@@ -8,6 +8,7 @@ import { DatabaseModule } from './database/database.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/auth/guard/role.guard';
 import { AuthGuard } from './modules/auth/guard/auth.guard';
+import { TemplateModule } from './modules/template/template.module';
 
 
 
@@ -18,6 +19,7 @@ import { AuthGuard } from './modules/auth/guard/auth.guard';
     }),
     DatabaseModule,
     AuthModule,
+    TemplateModule
   ],
   controllers: [AppController],
   providers: [
