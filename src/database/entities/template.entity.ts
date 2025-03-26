@@ -9,7 +9,8 @@ export class TemplateEntity extends BaseEntity {
   @Column({ name: 'description', type: 'text' })
   description: string;
 
-  @Column({ type: 'varchar', name: 'img_url' })
+  @Column({ type: 'varchar', name: 'img_url', nullable: true })
+
   imgUrl: string;
 
   @Column({ type: 'boolean', name: 'is_active', default: true })
