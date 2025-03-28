@@ -19,6 +19,16 @@ export class TemplateService {
     return await this.templateRepository.find();
   }
 
+  async getById(id: number) {
+    const result = await this.templateRepository.findOneBy({ id: id });
+
+    if (!result) {
+      throw new NotFoundException(`Template with ID ${id} not found`);
+    }
+
+    return result;
+  }
+
   async updateTemplate(payload: UpdateTemplateDto, id: number) {
     const result = await this.templateRepository.update({ id }, payload);
     if (result.affected === 0) {

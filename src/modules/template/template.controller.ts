@@ -20,6 +20,12 @@ export class TemplateController {
   }
 
   @Public()
+  @Get(':id')
+  GetById(@Param('id') id: number) {
+    return this.templateService.getById(id);
+  }
+
+  @Public()
   @Patch(':id')
   Update(@Body() payload: UpdateTemplateDto, @Param('id') id: number) {
     return this.templateService.updateTemplate(payload, id);
