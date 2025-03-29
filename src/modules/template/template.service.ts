@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TemplateEntity } from 'src/database/entities/template.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { TemplateDto, UpdateTemplateDto } from './template.dto';
 
 @Injectable()
@@ -15,8 +15,21 @@ export class TemplateService {
     return await this.templateRepository.save(templateDto);
   }
 
-  async get() {
-    return await this.templateRepository.find();
+  async get(q: string) {
+    return await this.templateRepository.find({
+      where: { name: ILike(`%${q}%`) },
+      order: { name: 'ASC' },
+    });
+  }
+
+  async getById(id: number) {
+    const result = await this.templateRepository.findOneBy({ id: id });
+
+    if (!result) {
+      throw new NotFoundException(`Template with ID ${id} not found`);
+    }
+
+    return result;
   }
 
   async updateTemplate(payload: UpdateTemplateDto, id: number) {

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { TemplateService } from './template.service';
 import { Public } from 'src/common/decorators/public.decorators';
 import { TemplateDto, UpdateTemplateDto } from './template.dto';
@@ -15,8 +23,14 @@ export class TemplateController {
 
   @Public()
   @Get()
-  getTemplate() {
-    return this.templateService.get();
+  getTemplate(@Query('q') q: string) {
+    return this.templateService.get(q);
+  }
+
+  @Public()
+  @Get(':id')
+  GetById(@Param('id') id: number) {
+    return this.templateService.getById(id);
   }
 
   @Public()
