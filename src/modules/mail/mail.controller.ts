@@ -1,0 +1,26 @@
+import { Body, Controller, Post } from '@nestjs/common';
+import { MailService } from './mail.service';
+import { Public } from 'src/common/decorators/public.decorators';
+import { sendMailDto } from './mail.dto';
+import { permitRequestSource } from './mail.source';
+
+@Controller('email')
+export class MailController {
+  constructor(private readonly mailService: MailService) {}
+
+  @Public()
+  @Post()
+  sendMail(@Body() payload: { email: string }) {
+    const data: sendMailDto = {
+      to: [payload.email],
+      subject: 'Test Mail',
+      data: {
+        name: 'Test User',
+        statusLink: 'https://nest-modules.github.io/mailer/docs/mailer.html',
+      },
+      html: permitRequestSource,
+    };
+
+    return this.mailService.sendMail(data);
+  }
+}
