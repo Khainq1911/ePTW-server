@@ -9,8 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/auth/guard/role.guard';
 import { AuthGuard } from './modules/auth/guard/auth.guard';
 import { TemplateModule } from './modules/template/template.module';
-
-
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -19,7 +18,8 @@ import { TemplateModule } from './modules/template/template.module';
     }),
     DatabaseModule,
     AuthModule,
-    TemplateModule
+    TemplateModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [
