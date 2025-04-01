@@ -26,6 +26,9 @@ import { MailController } from './mail.controller';
   ],
   providers: [MailService],
   controllers: [MailController],
+<<<<<<< HEAD
   exports: [MailService]
+=======
+>>>>>>> e6fa043 (feat: mail module)
 })
 export class MailModule {}
