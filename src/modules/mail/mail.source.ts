@@ -1,4 +1,4 @@
-export const permitRequestSource = `<!DOCTYPE html>
+export const permitRequestTemplate = `<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -56,3 +56,71 @@ export const permitRequestSource = `<!DOCTYPE html>
     </div>
 </body>
 </html>`;
+
+export const permitUpdateTemplate = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 24px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+    .status {
+      font-size: 18px;
+      font-weight: bold;
+      color: #007bff;
+      margin: 12px 0;
+    }
+    .footer {
+      margin-top: 32px;
+      font-size: 14px;
+      color: #666;
+    }
+    .highlight {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">📝 Permit Status Update (Permit ID: {{permitId}})</div>
+
+    <p>Dear {{recipientName}},</p>
+
+    <p>We would like to inform you that the status of your permit application (ID: <span class="highlight">{{permitId}}</span>) has been updated.</p>
+
+    <p class="status">🔄 Updated Status: {{status}}</p>
+
+    <p>
+      <span class="highlight">Changed By:</span> {{changerName}}<br />
+      <span class="highlight">Reason:</span> {{reason}}
+    </p>
+
+    <p>If you have any questions or require further clarification, feel free to reach out to our team.</p>
+
+    <p>Thank you for your attention.</p>
+
+    <div class="footer">
+      Best regards,<br />
+      Permit Management Team
+    </div>
+  </div>
+</body>
+</html>
+`;
