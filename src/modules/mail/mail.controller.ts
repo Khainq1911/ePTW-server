@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { Public } from 'src/common/decorators/public.decorators';
 import { sendMailDto } from './mail.dto';
-import { permitRequestSource } from './mail.source';
+import { permitRequestTemplate } from './mail.source';
 
 @Controller('email')
 export class MailController {
@@ -18,7 +18,7 @@ export class MailController {
         name: 'Test User',
         statusLink: 'https://nest-modules.github.io/mailer/docs/mailer.html',
       },
-      html: permitRequestSource,
+      html: permitRequestTemplate,
     };
 
     return this.mailService.sendMail(data);

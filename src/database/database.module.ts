@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { RoleEntity } from './entities/role.entity';
 import { TemplateEntity } from './entities/template.entity';
+import { PermitEntity } from './entities/permit.entity';
+import { PermitHistoryEntity } from './entities/permit-histories.entity';
 
 @Module({
   imports: [
@@ -17,7 +19,13 @@ import { TemplateEntity } from './entities/template.entity';
         username: configService.get<string>('DATABASE_USER'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [UserEntity, RoleEntity, TemplateEntity],
+        entities: [
+          UserEntity,
+          RoleEntity,
+          TemplateEntity,
+          PermitEntity,
+          PermitHistoryEntity,
+        ],
         synchronize: true,
       }),
     }),
