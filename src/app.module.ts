@@ -10,6 +10,8 @@ import { RolesGuard } from './modules/auth/guard/role.guard';
 import { AuthGuard } from './modules/auth/guard/auth.guard';
 import { TemplateModule } from './modules/template/template.module';
 import { MailModule } from './modules/mail/mail.module';
+import { PermitModule } from './modules/permit/permit.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { MailModule } from './modules/mail/mail.module';
     AuthModule,
     TemplateModule,
     MailModule,
+    PermitModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
