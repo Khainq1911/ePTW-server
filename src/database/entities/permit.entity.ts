@@ -6,8 +6,11 @@ export class PermitEntity extends BaseEntity {
   @Column({ name: 'company_name', type: 'varchar', nullable: false })
   companyName: string;
 
-  @Column({ name: 'applicant_id', type: 'integer', nullable: false })
-  applicantId: number;
+  @Column({ name: 'sender_id', type: 'integer', nullable: false })
+  senderId: number;
+
+  @Column({ name: 'receiver_id', type: 'integer', nullable: false })
+  receiverId: number;
 
   @Column({ name: 'template_id', type: 'integer', nullable: false })
   templateId: number;

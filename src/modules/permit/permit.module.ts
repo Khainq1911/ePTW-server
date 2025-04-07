@@ -5,11 +5,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PermitEntity } from 'src/database/entities/permit.entity';
 import { PermitController } from './permit.controller';
 import { PermitHistoryEntity } from 'src/database/entities/permit-histories.entity';
+import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
+
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([PermitEntity, PermitHistoryEntity]),
     MailModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [PermitController],
   providers: [PermitService],

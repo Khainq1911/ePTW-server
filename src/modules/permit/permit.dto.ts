@@ -7,10 +7,12 @@ import {
 } from 'class-validator';
 
 export class PermitDto {
-  to: any;
 
   @IsNumber()
-  applicantId: number;
+  senderId: number;
+
+  @IsNumber()
+  receiverId: number;
 
   @IsNumber()
   templateId: number;
@@ -51,6 +53,9 @@ export class PermitDto {
 export class UpdatePermitDto {
   @IsString()
   status?: string;
+
+  @IsNumber()
+  senderId: number;
 
   @IsNumber()
   changedBy: number;

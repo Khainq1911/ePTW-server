@@ -11,6 +11,7 @@ import { AuthGuard } from './modules/auth/guard/auth.guard';
 import { TemplateModule } from './modules/template/template.module';
 import { MailModule } from './modules/mail/mail.module';
 import { PermitModule } from './modules/permit/permit.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { PermitModule } from './modules/permit/permit.module';
     TemplateModule,
     MailModule,
     PermitModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
