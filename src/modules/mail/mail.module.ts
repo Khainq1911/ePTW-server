@@ -27,8 +27,12 @@ import { MailController } from './mail.controller';
   providers: [MailService],
   controllers: [MailController],
 <<<<<<< HEAD
+<<<<<<< HEAD
   exports: [MailService]
 =======
 >>>>>>> e6fa043 (feat: mail module)
+=======
+  exports: [MailService]
+>>>>>>> b48185c (feat: permit module)
 })
 export class MailModule {}

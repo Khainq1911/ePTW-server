@@ -101,13 +101,21 @@ export const permitUpdateTemplate = `<!DOCTYPE html>
   <div class="container">
     <div class="header">📝 Permit Status Update (Permit ID: {{permitId}})</div>
 
+<<<<<<< HEAD
     <p>Dear {{name}},</p>
+=======
+    <p>Dear {{recipientName}},</p>
+>>>>>>> b48185c (feat: permit module)
 
     <p>We would like to inform you that the status of your permit application (ID: <span class="highlight">{{permitId}}</span>) has been updated.</p>
 
     <p class="status">🔄 Updated Status: {{status}}</p>
 
     <p>
+<<<<<<< HEAD
+=======
+      <span class="highlight">Changed By:</span> {{changerName}}<br />
+>>>>>>> b48185c (feat: permit module)
       <span class="highlight">Reason:</span> {{reason}}
     </p>
 
