@@ -24,4 +24,9 @@ export class UserService {
       .getRawOne();
     return email;
   }
+
+  async ListUserByRole(roleId: number) {
+    const result = await this.userRepository.find({ where: { roleId } });
+    return result
+  }
 }

@@ -18,10 +18,10 @@ export class PermitEntity extends BaseEntity {
   @Column({ name: 'people_number', type: 'integer', nullable: false })
   peopleNumber: number;
 
-  @Column({ name: 'work_activities', type: 'text', nullable: false })
+  @Column({ name: 'work_activities', type: 'text', nullable: true })
   workActivities: string;
 
-  @Column({ name: 'equipments', type: 'text', nullable: false })
+  @Column({ name: 'equipments', type: 'text', nullable: true })
   equipments: string;
 
   @Column({ name: 'location', type: 'text', nullable: true })

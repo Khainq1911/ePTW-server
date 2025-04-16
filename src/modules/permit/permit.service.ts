@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PermitDto, UpdatePermitDto } from './permit.dto';
 import { MailService } from '../mail/mail.service';
 import { Repository } from 'typeorm';
@@ -30,6 +30,9 @@ export class PermitService {
     const { receiverId } = payload;
 
     const supervisor = await this.userService.getEmail(receiverId);
+    if (!supervisor) {
+      throw new NotFoundException('Receiver not found');
+    }
 
     await this.mailService.sendMail({
       to: supervisor.email,

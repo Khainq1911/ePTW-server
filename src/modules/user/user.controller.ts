@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from 'src/common/decorators/public.decorators';
 
@@ -15,5 +15,11 @@ export class UserController {
   @Get(':id')
   getMail(@Param('id') id: number) {
     return this.userService.getEmail(Number(id));
+  }
+
+  @Public()
+  @Get('role/:roleId')
+  async getUsersByRole(@Param('roleId') roleId: number) {
+    return this.userService.ListUserByRole(roleId);
   }
 }
