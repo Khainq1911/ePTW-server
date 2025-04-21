@@ -11,6 +11,8 @@ import {
 import { PermitHistoryEntity } from '../../database/entities/permit-histories.entity';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { UserService } from '../user/user.service';
+import { UserDTO } from 'src/common/decorators/user.decorators';
+import { Role } from 'src/common/enums/role.enum';
 
 @Injectable()
 export class PermitService {
@@ -78,8 +80,17 @@ export class PermitService {
     return { Message: 'Updated permit successful!' };
   }
 
-  async listPermit() {
-    const result = await this.permitRepository.find();
+  async listPermit(user: UserDTO) {
+    const isWorker = user.roleId === Role.Worker;
+    let result: unknown;
+    if (isWorker) {
+      result = await this.permitRepository.find({
+        where: { senderId: user.id },
+      });
+    } else {
+      result = await this.permitRepository.find();
+    }
+
     return result;
   }
 

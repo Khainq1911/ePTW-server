@@ -5,13 +5,13 @@ import { Public } from 'src/common/decorators/public.decorators';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-  @Public()
+  
   @Get()
   listUser() {
     return this.userService.listUser();
   }
 
-  @Public()
+ 
   @Get(':id')
   getMail(@Param('id') id: number) {
     return this.userService.getEmail(Number(id));
