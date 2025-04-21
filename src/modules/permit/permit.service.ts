@@ -82,4 +82,16 @@ export class PermitService {
     const result = await this.permitRepository.find();
     return result;
   }
+
+  async getPermitById(id: number) {
+    const result = await this.permitRepository.findOne({
+      where: { id },
+      relations: ['template', 'sender', 'receiver'],
+    });
+
+    if (!result) throw new NotFoundException('Permit not found');
+
+    const { templateId, senderId, receiverId, ...finalData } = result;
+    return finalData;
+  }
 }

@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { PermitEntity } from './permit.entity';
 
 @Entity({ name: 'templates' })
 export class TemplateEntity extends BaseEntity {
@@ -18,4 +19,7 @@ export class TemplateEntity extends BaseEntity {
 
   @Column({ type: 'jsonb', name: 'fields' })
   fields: any;
+
+  @OneToMany(() => PermitEntity, (permit) => permit.template)
+  permits: PermitEntity[]
 }

@@ -1,5 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { TemplateEntity } from './template.entity';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'permits' })
 export class PermitEntity extends BaseEntity {
@@ -46,4 +48,16 @@ export class PermitEntity extends BaseEntity {
 
   @Column({ name: 'data', type: 'jsonb', nullable: false })
   data: any;
+
+  @ManyToOne(() => TemplateEntity, (template) => template.permits)
+  @JoinColumn({ name: 'template_id' }) 
+  template: TemplateEntity;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'sender_id' }) 
+  sender: UserEntity;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'receiver_id' }) 
+  receiver: UserEntity;
 }

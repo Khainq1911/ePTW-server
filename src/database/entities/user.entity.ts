@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { RoleEntity } from './role.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -13,9 +14,11 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'email', unique: true, nullable: false })
   email: string;
 
+  @Exclude()
   @Column({ name: 'password', nullable: false })
   password: string;
 
+  @Exclude()
   @Column({ name: 'refresh_token', nullable: true })
   refreshToken: string;
 
