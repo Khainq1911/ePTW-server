@@ -12,6 +12,7 @@ import { TemplateModule } from './modules/template/template.module';
 import { MailModule } from './modules/mail/mail.module';
 import { PermitModule } from './modules/permit/permit.module';
 import { UserModule } from './modules/user/user.module';
+import { StatusHistoryModule } from './modules/history/history.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserModule } from './modules/user/user.module';
     MailModule,
     PermitModule,
     UserModule,
+    StatusHistoryModule,
   ],
   controllers: [AppController],
   providers: [

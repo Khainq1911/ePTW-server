@@ -1,7 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { RoleEntity } from './role.entity';
 import { Exclude } from 'class-transformer';
+import { PermitHistoryEntity } from './permit-histories.entity';
+
+
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
@@ -25,7 +28,10 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'role_id', type: 'int', default: 1, nullable: false })
   roleId: number;
 
-  @ManyToOne(() => RoleEntity, (role) => role.users)
+  @ManyToOne(() => RoleEntity, role => role.users)
   @JoinColumn({ name: 'role_id' })
   role?: RoleEntity;
+
+  @OneToMany(() => PermitHistoryEntity, history => history.changedBy)
+  histories: PermitHistoryEntity[];
 }
