@@ -9,7 +9,6 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { PermitService } from './permit.service';
-import { Public } from 'src/common/decorators/public.decorators';
 import { PermitDto, UpdatePermitDto } from './permit.dto';
 import { User, UserDTO } from 'src/common/decorators/user.decorators';
 
