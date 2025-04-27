@@ -123,3 +123,68 @@ export const permitUpdateTemplate = `<!DOCTYPE html>
 </body>
 </html>
 `;
+
+
+export const responseReviseTemplate = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 24px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .header {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      color: #28a745;
+    }
+    .message {
+      font-size: 16px;
+      margin: 16px 0;
+    }
+    .highlight {
+      font-weight: bold;
+    }
+    .footer {
+      margin-top: 32px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">✅ Permit Revision Submitted (Permit ID: {{permitId}})</div>
+
+    <p>Dear Admin,</p>
+
+    <p class="message">
+      The worker <span class="highlight">{{sender}}</span> has completed the requested revisions for the permit (ID: <span class="highlight">{{permitId}}</span>).
+    </p>
+
+    <p class="message">
+      Please review the updated permit and proceed with the next steps in the approval process.
+    </p>
+
+    <p>Thank you for your coordination.</p>
+
+    <div class="footer">
+      Best regards,<br />
+      Permit Management System
+    </div>
+  </div>
+</body>
+</html>
+`

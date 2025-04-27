@@ -12,7 +12,7 @@ export class MailController {
   @Post()
   sendMail(@Body() payload: { email: string }) {
     const data: sendMailDto = {
-      to: [payload.email],
+      to: payload.email,
       subject: 'Test Mail',
       data: {
         name: 'Test User',
