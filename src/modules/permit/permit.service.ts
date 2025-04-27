@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PermitDto, UpdatePermitDto } from './permit.dto';
+import { PermitDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
 import { MailService } from '../mail/mail.service';
 import { Repository } from 'typeorm';
 import { PermitEntity } from 'src/database/entities/permit.entity';
@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   permitRequestTemplate,
   permitUpdateTemplate,
+  responseReviseTemplate,
 } from '../mail/mail.source';
 import { PermitHistoryEntity } from '../../database/entities/permit-histories.entity';
 import { UserEntity } from 'src/database/entities/user.entity';
@@ -25,7 +26,7 @@ export class PermitService {
 
     private readonly userService: UserService,
 
-    private readonly mailService: MailService,
+    private readonly mailService: MailService
   ) {}
 
   async create(payload: PermitDto) {
@@ -51,7 +52,7 @@ export class PermitService {
     return { message: 'Permit created successfully' };
   }
 
-  async update(payload: UpdatePermitDto, id: number) {
+  async updateStatus(payload: UpdatePermitDto, id: number) {
     const { status, senderId, permitId, reason } = payload;
 
     const { email, name } = await this.userService.getEmail(senderId);
@@ -72,7 +73,7 @@ export class PermitService {
       { id: id },
       {
         status: status,
-      },
+      }
     );
 
     await this.permitHistoryEntity.save(payload);
@@ -104,5 +105,23 @@ export class PermitService {
 
     const { templateId, senderId, receiverId, ...finalData } = result;
     return finalData;
+  }
+
+  async revisePermit(id: number, payload: UpdateTotalPermitDto) {
+    const { sender, receiver, ...data } = payload;
+    const finalPayload = { ...data, senderId: sender?.id, receiverId: receiver?.id };
+
+    await this.permitRepository.update(id, finalPayload);
+
+    await this.mailService.sendMail({
+      to: receiver.email,
+      subject: 'Permit Revision Response',
+      data: {
+        sender: sender?.name,
+        permitId: id,
+      },
+      html: responseReviseTemplate,
+    });
+    return { Message: `Update permit successful!` };
   }
 }

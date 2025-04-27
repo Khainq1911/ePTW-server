@@ -6,10 +6,11 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   UseInterceptors,
 } from '@nestjs/common';
 import { PermitService } from './permit.service';
-import { PermitDto, UpdatePermitDto } from './permit.dto';
+import { PermitDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
 import { User, UserDTO } from 'src/common/decorators/user.decorators';
 
 @Controller('permit')
@@ -23,7 +24,7 @@ export class PermitController {
 
   @Patch(':id')
   updateStatus(@Body() payload: UpdatePermitDto, @Param('id') id: number) {
-    return this.permitService.update(payload, id);
+    return this.permitService.updateStatus(payload, id);
   }
 
   @Get()
@@ -35,5 +36,10 @@ export class PermitController {
   @Get(':id')
   getPermitById(@Param('id') id: number) {
     return this.permitService.getPermitById(id);
+  }
+
+  @Put('revise/:id')
+  updatePermit(@Param('id') id: number, @Body() payload: UpdateTotalPermitDto) {
+    return this.permitService.revisePermit(id, payload);
   }
 }
