@@ -8,7 +8,7 @@ import { TemplateDto, UpdateTemplateDto } from './template.dto';
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
-    private readonly templateRepository: Repository<TemplateEntity>,
+    private readonly templateRepository: Repository<TemplateEntity>
   ) {}
 
   async create(templateDto: TemplateDto) {
@@ -20,6 +20,10 @@ export class TemplateService {
       where: { name: ILike(`%${q}%`) },
       order: { name: 'ASC' },
     });
+  }
+
+  async listTemplate() {
+    return await this.templateRepository.find();
   }
 
   async getById(id: number) {
