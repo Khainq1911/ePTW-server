@@ -13,6 +13,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { PermitModule } from './modules/permit/permit.module';
 import { UserModule } from './modules/user/user.module';
 import { StatusHistoryModule } from './modules/history/history.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { StatusHistoryModule } from './modules/history/history.module';
     PermitModule,
     UserModule,
     StatusHistoryModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [
