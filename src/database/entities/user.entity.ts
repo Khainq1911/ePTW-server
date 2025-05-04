@@ -4,8 +4,6 @@ import { RoleEntity } from './role.entity';
 import { Exclude } from 'class-transformer';
 import { PermitHistoryEntity } from './permit-histories.entity';
 
-
-
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
   @Column({ name: 'name', nullable: false })
@@ -13,6 +11,9 @@ export class UserEntity extends BaseEntity {
 
   @Column({ name: 'phone', unique: true, nullable: false })
   phone: string;
+
+  @Column({ name: 'telegram_id', unique: true, nullable: true })
+  telegramId: string;
 
   @Column({ name: 'email', unique: true, nullable: false })
   email: string;

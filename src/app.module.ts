@@ -14,6 +14,7 @@ import { PermitModule } from './modules/permit/permit.module';
 import { UserModule } from './modules/user/user.module';
 import { StatusHistoryModule } from './modules/history/history.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { TelegramModule } from './modules/telegram/telegram.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { DashboardModule } from './modules/dashboard/dashboard.module';
     UserModule,
     StatusHistoryModule,
     DashboardModule,
+    TelegramModule,
   ],
   controllers: [AppController],
   providers: [
