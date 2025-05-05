@@ -188,3 +188,75 @@ export const responseReviseTemplate = `<!DOCTYPE html>
 </body>
 </html>
 `
+
+export const telegramOtpTemplate = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 24px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .header {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      color: #007bff;
+    }
+    .otp {
+      font-size: 28px;
+      font-weight: bold;
+      color: #dc3545;
+      text-align: center;
+      margin: 24px 0;
+      letter-spacing: 4px;
+    }
+    .message {
+      font-size: 16px;
+      margin-bottom: 16px;
+    }
+    .footer {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">🔐 OTP Verification</div>
+    
+    <p class="message">
+      Hello,
+    </p>
+
+    <p class="message">
+      Please use the following One-Time Password (OTP) to verify your identity:
+    </p>
+
+    <div class="otp">{{otp}}</div>
+
+    <p class="message">
+      This OTP is valid for <strong>5 minutes</strong>. Please do not share it with anyone.
+    </p>
+
+    <div class="footer">
+      Permit Management System<br />
+      Telegram Verification Service
+    </div>
+  </div>
+</body>
+</html>
+`

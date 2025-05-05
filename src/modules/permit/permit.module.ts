@@ -7,7 +7,7 @@ import { PermitController } from './permit.controller';
 import { PermitHistoryEntity } from 'src/database/entities/permit-histories.entity';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
-
+import { TelegramModule } from '../telegram/telegram.module';
 
 @Module({
   imports: [
@@ -15,6 +15,7 @@ import { UserModule } from '../user/user.module';
     MailModule,
     AuthModule,
     UserModule,
+    TelegramModule,
   ],
   controllers: [PermitController],
   providers: [PermitService],

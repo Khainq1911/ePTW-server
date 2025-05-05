@@ -4,10 +4,12 @@ import { TelegramController } from './telegram.controller';
 import { UserModule } from '../user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/database/entities/user.entity';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity]), MailModule],
   providers: [TelegramService],
   controllers: [TelegramController],
+  exports: [TelegramService],
 })
 export class TelegramModule {}

@@ -19,9 +19,10 @@ export class UserService {
   async getEmail(id: number) {
     const email = await this.userRepository
       .createQueryBuilder('user')
-      .select('email, name')
+      .select('email, name, telegram_id')
       .where('user.id = :id', { id: id })
       .getRawOne();
+
     return email;
   }
 
