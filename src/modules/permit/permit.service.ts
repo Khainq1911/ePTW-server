@@ -1,3 +1,4 @@
+import { TelegramService } from './../telegram/telegram.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PermitDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
 import { MailService } from '../mail/mail.service';
@@ -26,7 +27,9 @@ export class PermitService {
 
     private readonly userService: UserService,
 
-    private readonly mailService: MailService
+    private readonly mailService: MailService,
+
+    private readonly telegramService: TelegramService
   ) {}
 
   async create(payload: PermitDto) {
@@ -47,6 +50,13 @@ export class PermitService {
       html: permitRequestTemplate,
     });
 
+    if (supervisor?.telegram_id) {
+      this.telegramService.sendMessage(
+        supervisor.telegram_id,
+        `Hi ${supervisor.name}, a new permit request has been submitted. View status: test`
+      );
+    }
+
     await this.permitRepository.save(payload);
 
     return { message: 'Permit created successfully' };
@@ -55,7 +65,7 @@ export class PermitService {
   async updateStatus(payload: UpdatePermitDto, id: number) {
     const { status, senderId, permitId, reason } = payload;
 
-    const { email, name } = await this.userService.getEmail(senderId);
+    const { email, name, telegram_id } = await this.userService.getEmail(senderId);
 
     await this.mailService.sendMail({
       to: email,
@@ -74,6 +84,11 @@ export class PermitService {
       {
         status: status,
       }
+    );
+
+    this.telegramService.sendMessage(
+      telegram_id,
+      `Hi ${name}, your permit request (ID: ${permitId}) has been updated to ${status}.\nReason: ${reason || 'No reason provided.'}`
     );
 
     await this.permitHistoryEntity.save(payload);

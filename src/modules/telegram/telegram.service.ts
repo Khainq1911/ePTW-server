@@ -1,9 +1,11 @@
+import { MailService } from './../mail/mail.service';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { generateCodeTelegram } from 'src/common/utils';
+import { telegramOtpTemplate } from '../mail/mail.source';
 
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -18,7 +20,8 @@ export class TelegramService {
   constructor(
     private readonly configService: ConfigService,
     @InjectRepository(UserEntity)
-    private readonly userRepo: Repository<UserEntity>
+    private readonly userRepo: Repository<UserEntity>,
+    private readonly MailService: MailService
   ) {
     this.bot = new TelegramBot(this.configService.get<string>('TELEGRAM_BOT_TOKEN'), {
       polling: true,
@@ -102,10 +105,25 @@ export class TelegramService {
 
     if (user) {
       const otpCode = await generateCodeTelegram();
-      this.bot.sendMessage(telegramUserId, otpCode);
+
+      const data = {
+        to: emailInput,
+        subject: 'Telegram OTP code',
+        data: { otp: otpCode },
+        html: telegramOtpTemplate,
+      };
+
+      await this.MailService.sendMail(data);
+
       this.attemptMap.set(telegramUserId, 0);
       this.emailMap.set(telegramUserId, emailInput);
       this.otpMap.set(telegramUserId, otpCode);
+
+      this.bot.sendMessage(
+        telegramUserId,
+        `📧 Mã OTP đã được gửi đến email: *${emailInput}*. Vui lòng kiểm tra hộp thư của bạn.`,
+        { parse_mode: 'Markdown' }
+      );
     } else {
       this.bot.sendMessage(
         telegramUserId,
@@ -120,6 +138,15 @@ export class TelegramService {
 
     try {
       await this.bot.sendPoll(telegramUserId, question, options);
+      console.log('✅ Gửi khảo sát thành công.');
+    } catch (error) {
+      console.error(`❌ Lỗi gửi khảo sát: ${error.message}`);
+    }
+  }
+
+  async sendMessage(telegramUserId: number, message: string) {
+    try {
+      await this.bot.sendMessage(telegramUserId, message);
       console.log('✅ Gửi khảo sát thành công.');
     } catch (error) {
       console.error(`❌ Lỗi gửi khảo sát: ${error.message}`);
