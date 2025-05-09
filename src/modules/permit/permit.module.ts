@@ -8,6 +8,7 @@ import { PermitHistoryEntity } from 'src/database/entities/permit-histories.enti
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { TelegramModule } from '../telegram/telegram.module';
+import { MinioModule } from '../minio/minio.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TelegramModule } from '../telegram/telegram.module';
     AuthModule,
     UserModule,
     TelegramModule,
+    MinioModule,
   ],
   controllers: [PermitController],
   providers: [PermitService],

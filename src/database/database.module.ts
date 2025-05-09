@@ -6,6 +6,7 @@ import { RoleEntity } from './entities/role.entity';
 import { TemplateEntity } from './entities/template.entity';
 import { PermitEntity } from './entities/permit.entity';
 import { PermitHistoryEntity } from './entities/permit-histories.entity';
+import { FileEntity } from './entities/attachment-file.entity';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PermitHistoryEntity } from './entities/permit-histories.entity';
           TemplateEntity,
           PermitEntity,
           PermitHistoryEntity,
+          FileEntity,
         ],
         synchronize: true,
       }),

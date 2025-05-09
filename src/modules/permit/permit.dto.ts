@@ -1,11 +1,4 @@
-import {
-  IsDateString,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  isString,
-  IsString,
-} from 'class-validator';
+import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class PermitDto {
   @IsNumber()
@@ -48,6 +41,8 @@ export class PermitDto {
 
   @IsNotEmpty()
   data: any;
+
+  files?: string[];
 }
 
 export class UpdatePermitDto {

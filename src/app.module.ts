@@ -15,6 +15,7 @@ import { UserModule } from './modules/user/user.module';
 import { StatusHistoryModule } from './modules/history/history.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { TelegramModule } from './modules/telegram/telegram.module';
+import { MinioModule } from './modules/minio/minio.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TelegramModule } from './modules/telegram/telegram.module';
     StatusHistoryModule,
     DashboardModule,
     TelegramModule,
+    MinioModule,
   ],
   controllers: [AppController],
   providers: [
