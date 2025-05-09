@@ -8,6 +8,6 @@ import { FileEntity } from 'src/database/entities/attachment-file.entity';
   imports: [TypeOrmModule.forFeature([FileEntity])],
   providers: [MinioService],
   controllers: [MinioController],
-  exports: [MinioService]
+  exports: [MinioService],
 })
 export class MinioModule {}

@@ -11,7 +11,6 @@ import {
   responseReviseTemplate,
 } from '../mail/mail.source';
 import { PermitHistoryEntity } from '../../database/entities/permit-histories.entity';
-import { UserEntity } from 'src/database/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { UserDTO } from 'src/common/decorators/user.decorators';
 import { Role } from 'src/common/enums/role.enum';
@@ -38,7 +37,7 @@ export class PermitService {
   async create(payload: PermitDto) {
     const { receiverId } = payload;
     const { files, ...data } = payload;
-    const supervisor = await this.userService.getEmail(receiverId);
+    const supervisor: any = await this.userService.getEmail(receiverId);
     if (!supervisor) {
       throw new NotFoundException('Receiver not found');
     }
@@ -54,7 +53,7 @@ export class PermitService {
     });
 
     if (supervisor?.telegram_id) {
-      this.telegramService.sendMessage(
+      await this.telegramService.sendMessage(
         supervisor.telegram_id,
         `Hi ${supervisor.name}, a new permit request has been submitted. View status: test`
       );
@@ -80,7 +79,7 @@ export class PermitService {
   async updateStatus(payload: UpdatePermitDto, id: number) {
     const { status, senderId, permitId, reason } = payload;
 
-    const { email, name, telegram_id } = await this.userService.getEmail(senderId);
+    const { email, name, telegram_id }: any = await this.userService.getEmail(senderId);
 
     await this.mailService.sendMail({
       to: email,

@@ -1,6 +1,5 @@
 import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TemplateService } from './template.service';
-import { Public } from 'src/common/decorators/public.decorators';
 import { TemplateDto, UpdateTemplateDto } from './template.dto';
 
 @Controller('template')
@@ -17,7 +16,7 @@ export class TemplateController {
     return this.templateService.get(q);
   }
 
-  @Get("list")
+  @Get('list')
   GetAll() {
     return this.templateService.listTemplate();
   }

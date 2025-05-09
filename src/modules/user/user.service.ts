@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { emit } from 'process';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -8,7 +7,7 @@ import { Repository } from 'typeorm';
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly userRepository: Repository<UserEntity>
   ) {}
 
   async listUser() {
@@ -16,8 +15,8 @@ export class UserService {
     return results;
   }
 
-  async getEmail(id: number) {
-    const email = await this.userRepository
+  async getEmail(id: number): Promise<string | undefined> {
+    const email: string | undefined = await this.userRepository
       .createQueryBuilder('user')
       .select('email, name, telegram_id')
       .where('user.id = :id', { id: id })
@@ -28,6 +27,6 @@ export class UserService {
 
   async ListUserByRole(roleId: number) {
     const result = await this.userRepository.find({ where: { roleId } });
-    return result
+    return result;
   }
 }

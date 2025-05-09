@@ -1,17 +1,16 @@
-import { Body, Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Public } from 'src/common/decorators/public.decorators';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
-  
+
   @Get()
   listUser() {
     return this.userService.listUser();
   }
 
- 
   @Get(':id')
   getMail(@Param('id') id: number) {
     return this.userService.getEmail(Number(id));
