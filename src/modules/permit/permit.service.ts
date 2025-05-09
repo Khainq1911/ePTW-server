@@ -15,6 +15,7 @@ import { UserEntity } from 'src/database/entities/user.entity';
 import { UserService } from '../user/user.service';
 import { UserDTO } from 'src/common/decorators/user.decorators';
 import { Role } from 'src/common/enums/role.enum';
+import { MinioService } from '../minio/minio.service';
 
 @Injectable()
 export class PermitService {
@@ -29,12 +30,14 @@ export class PermitService {
 
     private readonly mailService: MailService,
 
-    private readonly telegramService: TelegramService
+    private readonly telegramService: TelegramService,
+
+    private readonly minioService: MinioService
   ) {}
 
   async create(payload: PermitDto) {
     const { receiverId } = payload;
-
+    const { files, ...data } = payload;
     const supervisor = await this.userService.getEmail(receiverId);
     if (!supervisor) {
       throw new NotFoundException('Receiver not found');
@@ -57,7 +60,19 @@ export class PermitService {
       );
     }
 
-    await this.permitRepository.save(payload);
+    const result = await this.permitRepository.save(data);
+
+    if (files) {
+      await Promise.all(
+        files.map((item: any) => {
+          const fileInfor = {
+            permitId: result.id,
+            fileName: item,
+          };
+          return this.minioService.createAttachmentFile(fileInfor);
+        })
+      );
+    }
 
     return { message: 'Permit created successfully' };
   }
