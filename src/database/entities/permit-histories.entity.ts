@@ -14,7 +14,7 @@ export class PermitHistoryEntity {
   id: number;
 
   @Column({ name: 'changed_by', type: 'int', nullable: false })
-  changedBy: number; 
+  changedBy: number;
 
   @Column({ name: 'permit_id', type: 'int', nullable: false })
   permitId: number;
@@ -28,8 +28,7 @@ export class PermitHistoryEntity {
   @CreateDateColumn({ name: 'created_at' })
   created_at: Date;
 
- 
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: 'changed_by' }) 
+  @JoinColumn({ name: 'changed_by' })
   user?: UserEntity;
 }

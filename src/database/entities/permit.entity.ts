@@ -49,15 +49,15 @@ export class PermitEntity extends BaseEntity {
   @Column({ name: 'data', type: 'jsonb', nullable: false })
   data: any;
 
-  @ManyToOne(() => TemplateEntity, (template) => template.permits)
-  @JoinColumn({ name: 'template_id' }) 
+  @ManyToOne(() => TemplateEntity, template => template.permits)
+  @JoinColumn({ name: 'template_id' })
   template: TemplateEntity;
 
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: 'sender_id' }) 
+  @JoinColumn({ name: 'sender_id' })
   sender: UserEntity;
 
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: 'receiver_id' }) 
+  @JoinColumn({ name: 'receiver_id' })
   receiver: UserEntity;
 }

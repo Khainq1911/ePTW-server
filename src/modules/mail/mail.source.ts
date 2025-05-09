@@ -124,7 +124,6 @@ export const permitUpdateTemplate = `<!DOCTYPE html>
 </html>
 `;
 
-
 export const responseReviseTemplate = `<!DOCTYPE html>
 <html>
 <head>
@@ -187,7 +186,7 @@ export const responseReviseTemplate = `<!DOCTYPE html>
   </div>
 </body>
 </html>
-`
+`;
 
 export const telegramOtpTemplate = `<!DOCTYPE html>
 <html>
@@ -259,4 +258,4 @@ export const telegramOtpTemplate = `<!DOCTYPE html>
   </div>
 </body>
 </html>
-`
+`;

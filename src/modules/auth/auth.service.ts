@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -17,7 +11,7 @@ export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async register(registerDto: RegisterDto) {
@@ -69,10 +63,7 @@ export class AuthService {
       expiresIn: '1d',
     });
 
-    await this.userRepository.update(
-      { email: payload.email },
-      { refreshToken: refreshToken },
-    );
+    await this.userRepository.update({ email: payload.email }, { refreshToken: refreshToken });
     return { accessToken, refreshToken };
   }
 
@@ -81,7 +72,7 @@ export class AuthService {
       const verifyToken = await this.jwtService.verifyAsync(refreshToken, {
         secret: process.env.SECRET_KEY,
       });
-
+      
       const user = await this.userRepository.findOneBy({
         email: verifyToken.email,
         refreshToken,
@@ -97,16 +88,10 @@ export class AuthService {
         };
         return this.generateToken(payload);
       } else {
-        throw new HttpException(
-          'Refresh Token is not valid!',
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException('Refresh Token is not valid!', HttpStatus.BAD_REQUEST);
       }
     } catch {
-      throw new HttpException(
-        'Refresh Token is not valid!',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Refresh Token is not valid!', HttpStatus.BAD_REQUEST);
     }
   }
 }

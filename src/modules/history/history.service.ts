@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PermitHistoryEntity } from 'src/database/entities/permit-histories.entity';
 import { Repository } from 'typeorm';
@@ -15,7 +15,6 @@ export class StatusHistoryService {
       where: { permitId: id },
       relations: ['user'],
     });
-
 
     const finalData = result.map(item => {
       const { changedBy, user, ...data } = item;

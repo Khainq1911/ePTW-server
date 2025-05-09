@@ -7,7 +7,7 @@ import { MailController } from './mail.controller';
 @Module({
   imports: [
     MailerModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         transport: {
           host: configService.get('MAIL_HOST'),
           //port: +configService.get('MAIL_PORT'),
@@ -26,6 +26,6 @@ import { MailController } from './mail.controller';
   ],
   providers: [MailService],
   controllers: [MailController],
-  exports: [MailService]
+  exports: [MailService],
 })
 export class MailModule {}

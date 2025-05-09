@@ -1,3 +1,1 @@
-export class dashboardDto{
-    
-}
+export class dashboardDto {}

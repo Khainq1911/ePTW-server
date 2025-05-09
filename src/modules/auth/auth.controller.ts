@@ -3,7 +3,6 @@ import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto } from './auth.dto';
 import { Public } from 'src/common/decorators/public.decorators';
 import { User } from 'src/common/decorators/user.decorators';
-import { UserEntity } from 'src/database/entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -22,13 +21,12 @@ export class AuthController {
 
   @Public()
   @Post('refresh-token')
-  refreshToken(@Body() { refreshToken }) {
+  refreshToken(@Body() refreshToken: string) {
     return this.authService.refreshToken(refreshToken);
   }
 
-
-  @Get("test")
-  async findOne(@User() user: unknown) {
-    return user
+  @Get('test')
+  findOne(@User() user: unknown) {
+    return user;
   }
 }

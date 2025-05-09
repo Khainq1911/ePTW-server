@@ -6,12 +6,11 @@ import { Repository } from 'typeorm';
 import { UserEntity } from 'src/database/entities/user.entity';
 import { generateCodeTelegram } from 'src/common/utils';
 import { telegramOtpTemplate } from '../mail/mail.source';
-
-const TelegramBot = require('node-telegram-bot-api');
+import * as TelegramBot from 'node-telegram-bot-api';
 
 @Injectable()
 export class TelegramService {
-  private readonly bot: any;
+  private readonly bot: TelegramBot;
   private otpMap = new Map<number, string>();
   private emailMap = new Map<number, string>();
   private attemptMap = new Map<number, number>();
@@ -144,12 +143,16 @@ export class TelegramService {
     }
   }
 
-  async sendMessage(telegramUserId: number, message: string) {
+  async sendMessage(telegramUserId: number, message: string): Promise<void> {
     try {
       await this.bot.sendMessage(telegramUserId, message);
-      console.log('✅ Gửi khảo sát thành công.');
-    } catch (error) {
-      console.error(`❌ Lỗi gửi khảo sát: ${error.message}`);
+      console.log('✅ Gửi tin nhắn thành công.');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(`❌ Lỗi gửi tin nhắn: ${error.message}`);
+      } else {
+        console.error('❌ Lỗi không xác định khi gửi tin nhắn.', error);
+      }
     }
   }
 }
