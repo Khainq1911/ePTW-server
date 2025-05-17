@@ -13,3 +13,9 @@ export class UpdateTemplateDto {
   isActive?: boolean;
   imgUrl?: string;
 }
+
+export class QueryDto {
+  q?: string;
+  page?: number;
+  limit?: number;
+}

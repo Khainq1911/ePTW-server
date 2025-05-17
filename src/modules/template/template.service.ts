@@ -1,3 +1,4 @@
+import { query } from 'express';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TemplateEntity } from 'src/database/entities/template.entity';
@@ -15,11 +16,17 @@ export class TemplateService {
     return await this.templateRepository.save(templateDto);
   }
 
-  async get(q: string) {
-    return await this.templateRepository.find({
-      where: { name: ILike(`%${q}%`) },
-      order: { name: 'ASC' },
+  async get(query) {
+    const limit = query.limit || 10;
+    const page = query.page || 0;
+    const [data, total] = await this.templateRepository.findAndCount({
+      where: { name: ILike(`%${query.q}%`) },
+      skip: page * limit,
+      take: query.limit,
+      order: { name: 'DESC' },
     });
+
+    return { data, total };
   }
 
   async listTemplate() {

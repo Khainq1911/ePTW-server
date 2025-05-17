@@ -1,6 +1,7 @@
+import { query } from 'express';
 import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TemplateService } from './template.service';
-import { TemplateDto, UpdateTemplateDto } from './template.dto';
+import { QueryDto, TemplateDto, UpdateTemplateDto } from './template.dto';
 
 @Controller('template')
 export class TemplateController {
@@ -12,8 +13,8 @@ export class TemplateController {
   }
 
   @Get()
-  getTemplate(@Query('q') q: string) {
-    return this.templateService.get(q);
+  getTemplate(@Query() query: QueryDto) {
+    return this.templateService.get(query);
   }
 
   @Get('list')
