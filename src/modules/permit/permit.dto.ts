@@ -1,8 +1,18 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  isString,
+  IsString,
+} from 'class-validator';
 
 export class PermitDto {
   @IsNumber()
   senderId: number;
+
+  @IsString()
+  name: string;
 
   @IsNumber()
   receiverId: number;
@@ -76,6 +86,9 @@ export class UpdateTotalPermitDto {
   @IsString()
   companyName: string;
 
+  @IsString()
+  name: string;
+
   @IsNumber()
   peopleNumber: number;
 
@@ -101,4 +114,11 @@ export class UpdateTotalPermitDto {
 
   @IsNotEmpty()
   data: any;
+}
+
+export class QueryDto {
+  q?: string;
+  status?: string;
+  limit: number;
+  page: number;
 }

@@ -7,11 +7,13 @@ import {
   Patch,
   Post,
   Put,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { PermitService } from './permit.service';
-import { PermitDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
+import { PermitDto, QueryDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
 import { User, UserDTO } from 'src/common/decorators/user.decorators';
+
 
 @Controller('permit')
 export class PermitController {
@@ -27,9 +29,10 @@ export class PermitController {
     return this.permitService.updateStatus(payload, id);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  listPermit(@User() user: UserDTO) {
-    return this.permitService.listPermit(user);
+  listPermit(@User() user: UserDTO, @Query() query: QueryDto) {
+    return this.permitService.listPermit(user, query);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
