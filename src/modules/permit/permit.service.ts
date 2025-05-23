@@ -1,8 +1,9 @@
+import { query } from 'express';
 import { TelegramService } from './../telegram/telegram.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { PermitDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
+import { PermitDto, QueryDto, UpdatePermitDto, UpdateTotalPermitDto } from './permit.dto';
 import { MailService } from '../mail/mail.service';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { PermitEntity } from 'src/database/entities/permit.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -110,18 +111,35 @@ export class PermitService {
     return { Message: 'Updated permit successful!' };
   }
 
-  async listPermit(user: UserDTO) {
+  async listPermit(user: UserDTO, query: QueryDto) {
     const isWorker = user.roleId === Role.Worker;
-    let result: unknown;
-    if (isWorker) {
-      result = await this.permitRepository.find({
-        where: { senderId: user.id },
-      });
-    } else {
-      result = await this.permitRepository.find();
+    const q = this.permitRepository
+      .createQueryBuilder('permit')
+      .leftJoinAndSelect('permit.template', 'template')
+      .leftJoinAndSelect('permit.sender', 'sender')
+      .leftJoinAndSelect('permit.receiver', 'receiver')
+      .limit(query.limit)
+      .offset(query.page * query.limit)
+      .orderBy('permit.updated_at', 'DESC')
+      .where('permit.name ILIKE :name', { name: `%${query.q}%` });
+
+    if (query.status) {
+      q.andWhere('permit.status = :status', { status: query.status });
     }
 
-    return result;
+    if (isWorker) {
+      q.andWhere('permit.senderId = :senderId', { senderId: user.id });
+    }
+
+    const [result, total] = await q.getManyAndCount();
+
+    const finalData = result.map((item: any) => {
+      const { template, ...data } = item;
+      const { fields, ...templateData } = template;
+      return { ...data, template: templateData };
+    });
+
+    return { data: finalData, total };
   }
 
   async getPermitById(id: number) {
