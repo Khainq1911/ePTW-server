@@ -23,7 +23,7 @@ export class TelegramService {
     private readonly MailService: MailService
   ) {
     this.bot = new TelegramBot(this.configService.get<string>('TELEGRAM_BOT_TOKEN'), {
-      polling: true,
+      polling: false,
     });
 
     this.bot.onText(/\/start/, async message => {

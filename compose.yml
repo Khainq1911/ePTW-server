@@ -1,0 +1,58 @@
+networks:
+  eptw-system:
+    name: network
+
+services:
+  app: 
+    build: .
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - MINIO_HOST=${MINIO_HOST}
+      - MINIO_PORT=${MINIO_PORT}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - minio
+    networks:
+      - eptw-system
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: eptw
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - eptw-system
+  minio:
+    image: minio/minio
+    command: server /data
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - miniodata:/data
+    ports:
+      - "9000:9000"
+    restart: always
+    networks:
+      - eptw-system
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+volumes:
+  pgdata: {}
+  miniodata: {}
